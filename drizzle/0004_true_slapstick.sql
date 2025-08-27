@@ -1,0 +1,1 @@
+ALTER TABLE "project_access" DROP COLUMN "created_at";

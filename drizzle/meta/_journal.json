@@ -29,6 +29,20 @@
       "when": 1756245557190,
       "tag": "0003_tiny_iceman",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1756248176733,
+      "tag": "0004_true_slapstick",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1756315803463,
+      "tag": "0005_good_shadowcat",
+      "breakpoints": true
     }
   ]
 }

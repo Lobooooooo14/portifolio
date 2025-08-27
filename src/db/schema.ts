@@ -90,7 +90,6 @@ export const ProjectsTable = pgTable("projects", {
   title: varchar("title", { length: 48 }).notNull(),
   shortDescription: varchar("short_description", { length: 48 }),
   githubUrl: text("github_url"),
-  url: text("url"),
   description: text("description"),
   createdAt: timestamp("created_at")
     .$defaultFn(() => new Date())
@@ -105,17 +104,6 @@ export const BadgesTable = pgTable("badges", {
   badge_id: varchar("badge_id", { length: 32 }).notNull(),
 })
 
-export const ProjectsRelations = relations(ProjectsTable, ({ many }) => ({
-  badges: many(BadgesTable),
-}))
-
-export const BadgesRelations = relations(BadgesTable, ({ one }) => ({
-  project: one(ProjectsTable, {
-    fields: [BadgesTable.projectId],
-    references: [ProjectsTable.id],
-  }),
-}))
-
 export const ProjectVisibilityEnum = pgEnum("project_visibility", [
   "PUBLIC",
   "PRIVATE",
@@ -128,11 +116,27 @@ export const ProjectAccessTable = pgTable("project_access", {
     .notNull()
     .references(() => ProjectsTable.id, { onDelete: "cascade" }),
   visibility: ProjectVisibilityEnum("visibility").notNull().default("PRIVATE"),
-  createdAt: timestamp("created_at")
-    .$defaultFn(() => new Date())
-    .notNull(),
 })
 
+// relation projects -> badges
+// relation projects -> project_access
+export const ProjectsRelations = relations(ProjectsTable, ({ many, one }) => ({
+  badges: many(BadgesTable),
+  access: one(ProjectAccessTable, {
+    fields: [ProjectsTable.id],
+    references: [ProjectAccessTable.projectId],
+  }),
+}))
+
+// relation badges -> projects
+export const BadgesRelations = relations(BadgesTable, ({ one }) => ({
+  project: one(ProjectsTable, {
+    fields: [BadgesTable.projectId],
+    references: [ProjectsTable.id],
+  }),
+}))
+
+// relation project_access -> projects
 export const ProjectAccessRelations = relations(
   ProjectAccessTable,
   ({ one }) => ({
@@ -140,12 +144,5 @@ export const ProjectAccessRelations = relations(
       fields: [ProjectAccessTable.projectId],
       references: [ProjectsTable.id],
     }),
-  })
-)
-
-export const ProjectsWithAccessRelations = relations(
-  ProjectsTable,
-  ({ many }) => ({
-    access: many(ProjectAccessTable),
   })
 )
