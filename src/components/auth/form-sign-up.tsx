@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import type { ServerError } from "@/lib/auth-client"
 import { signUpSchema } from "@/utils/validations"
 
@@ -83,97 +84,106 @@ export function FormSignUp({
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="space-y-4 border-2 p-4 rounded-2xl min-w-[400px] max-h-[60%] overflow-y-auto"
-      >
+      <div className="border-2 p-4 rounded-2xl min-w-[400px]">
         <h1 className="text-2xl font-bold mb-4 text-center">Sign up</h1>
 
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="John Codes" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <ScrollArea className="h-[300px] mb-4">
+            <div className="space-y-4 mb-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="John Codes" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="jonh@mail.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="jonh@mail.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="john_codes" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input placeholder="john_codes" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-        <FormField
-          control={form.control}
-          name="displayUsername"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Display name</FormLabel>
-              <FormControl>
-                <Input placeholder="The John Codes" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+              <FormField
+                control={form.control}
+                name="displayUsername"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Display name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="The John Codes" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input placeholder="********" type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="********"
+                        type="password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </ScrollArea>
 
-        <FormMessage className="text-center">{serverErrorMessage}</FormMessage>
+          <FormMessage className="text-center">
+            {serverErrorMessage}
+          </FormMessage>
 
-        <Link href="/sign-in" className="text-center block hover:underline">
-          &larr; Sign in
-        </Link>
+          <Link href="/sign-in" className="text-center block hover:underline">
+            &larr; Sign in
+          </Link>
 
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={isLoading}
-          isLoading={isLoading}
-        >
-          Sign up
-        </Button>
-      </form>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isLoading}
+            isLoading={isLoading}
+          >
+            Sign up
+          </Button>
+        </form>
+      </div>
     </Form>
   )
 }

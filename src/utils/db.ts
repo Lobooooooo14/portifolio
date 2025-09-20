@@ -8,13 +8,19 @@ export enum ProjectVisibility {
   UNLISTED = "UNLISTED",
 }
 
-export interface Project
-  extends Omit<typeof ProjectsTable.$inferInsert, "id" | "createdAt"> {
+type ExtraProjectType = {
   badges: string[]
   visibility: ProjectVisibility
 }
 
-export async function insertProject(db: dbType, project: Project) {
+export type ProjectType = typeof ProjectsTable.$inferSelect & ExtraProjectType
+
+export type InsertProjectType = Omit<
+  typeof ProjectsTable.$inferInsert & ExtraProjectType,
+  "id" | "createdAt"
+>
+
+export async function insertProject(db: dbType, project: InsertProjectType) {
   const { badges, visibility, ...data } = project
 
   return await db.transaction(async tx => {
@@ -79,15 +85,17 @@ export async function listProjects(
 export async function editProject(
   db: dbType,
   projectId: string,
-  project: Partial<Project>
+  project: Partial<InsertProjectType>
 ) {
   const { badges, visibility, ...data } = project
 
   return await db.transaction(async tx => {
-    await tx
-      .update(ProjectsTable)
-      .set(data)
-      .where(eq(ProjectsTable.id, projectId))
+    if (data && Object.keys(data).length) {
+      await tx
+        .update(ProjectsTable)
+        .set(data)
+        .where(eq(ProjectsTable.id, projectId))
+    }
 
     if (visibility) {
       await tx

@@ -1,7 +1,7 @@
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod"
 import { z } from "zod"
 import { ProjectsTable } from "@/db/schema"
-import { ProjectVisibility } from "./db"
+import { ProjectVisibility } from "@/utils/db"
 
 export const signUpSchema = z.object({
   email: z.email(),

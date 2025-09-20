@@ -1,6 +1,9 @@
 import type { Metadata } from "next"
 import "./globals.css"
+
 import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/sonner"
+import Providers from "./providers"
 
 export const metadata: Metadata = {
   title: "Portifolio",
@@ -22,8 +25,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <Providers>{children}</Providers>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   )

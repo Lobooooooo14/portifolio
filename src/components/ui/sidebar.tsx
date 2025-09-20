@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/tooltip"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
+import { ScrollArea } from "./scroll-area"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -54,6 +55,8 @@ function useSidebar() {
 
 function SidebarProvider({
   defaultOpen = true,
+  sidebarWidth = SIDEBAR_WIDTH,
+  sidebarWidthIcon = SIDEBAR_WIDTH_ICON,
   open: openProp,
   onOpenChange: setOpenProp,
   className,
@@ -61,6 +64,8 @@ function SidebarProvider({
   children,
   ...props
 }: React.ComponentProps<"div"> & {
+  sidebarWidth?: string
+  sidebarWidthIcon?: string
   defaultOpen?: boolean
   open?: boolean
   onOpenChange?: (open: boolean) => void
@@ -132,8 +137,8 @@ function SidebarProvider({
           data-slot="sidebar-wrapper"
           style={
             {
-              "--sidebar-width": SIDEBAR_WIDTH,
-              "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
+              "--sidebar-width": sidebarWidth,
+              "--sidebar-width-icon": sidebarWidthIcon,
               ...style,
             } as React.CSSProperties
           }
@@ -154,6 +159,7 @@ function Sidebar({
   side = "left",
   variant = "sidebar",
   collapsible = "offcanvas",
+  sidebarWidthMobile = SIDEBAR_WIDTH_MOBILE,
   className,
   children,
   ...props
@@ -161,6 +167,7 @@ function Sidebar({
   side?: "left" | "right"
   variant?: "sidebar" | "floating" | "inset"
   collapsible?: "offcanvas" | "icon" | "none"
+  sidebarWidthMobile?: string
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
 
@@ -189,7 +196,7 @@ function Sidebar({
           className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
           style={
             {
-              "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+              "--sidebar-width": sidebarWidthMobile,
             } as React.CSSProperties
           }
           side={side}
@@ -372,12 +379,11 @@ function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="sidebar-content"
       data-sidebar="content"
-      className={cn(
-        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
-        className
-      )}
+      className={cn("flex min-h-0 flex-1 flex-col gap-2", className)}
       {...props}
-    />
+    >
+      <ScrollArea className="h-full">{props.children}</ScrollArea>
+    </div>
   )
 }
 
