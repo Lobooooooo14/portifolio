@@ -9,13 +9,17 @@ import { columns } from "@/components/dashboard/projects/columns"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table"
 import { Skeleton } from "@/components/ui/skeleton"
-import { getProjects } from "@/http/api"
+import {
+  type ErrorResponse,
+  getProjects,
+  type ListProjectsType,
+} from "@/http/api"
 import type { ProjectType } from "@/utils/db"
 
 gsap.registerPlugin(useGSAP)
 
 export const ProjectsDataTableContext = createContext<{
-  // biome-ignore lint/suspicious/noExplicitAny: s
+  // biome-ignore lint/suspicious/noExplicitAny: ignore
   refetch: () => Promise<any>
 } | null>(null)
 
@@ -30,7 +34,7 @@ export default function ProjectsDataTable() {
     isLoading,
     isFetching,
     refetch,
-  } = useQuery({
+  } = useQuery<ListProjectsType, ErrorResponse>({
     queryKey: ["projects"],
     queryFn: () => getProjects(),
     refetchOnWindowFocus: false,
@@ -55,6 +59,7 @@ export default function ProjectsDataTable() {
     }
   }, [isFetching])
 
+  // TODO: refactor
   useEffect(() => {
     if (projectsData) {
       const { data, success } = projectsData

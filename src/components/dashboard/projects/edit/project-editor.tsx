@@ -15,7 +15,13 @@ import {
 } from "@/components/ui/sidebar"
 import { Skeleton } from "@/components/ui/skeleton"
 import VisibilityBadge from "@/components/visibility"
-import { getProject, updateProject } from "@/http/api"
+import { useIsMobile } from "@/hooks/use-mobile"
+import {
+  type ErrorResponse,
+  type GetProjectType,
+  getProject,
+  updateProject,
+} from "@/http/api"
 import type { ProjectType } from "@/utils/db"
 import { projectUpdateSchema } from "@/utils/validations"
 import Content from "./editor/content"
@@ -38,8 +44,9 @@ export default function ProjectEditor({
 }) {
   const [data, setData] = useState<ProjectType | null>(null)
   const [lastData, setLastData] = useState<ProjectType | null>(null)
+  const isMobile = useIsMobile()
 
-  const projectQuery = useQuery({
+  const projectQuery = useQuery<GetProjectType, ErrorResponse>({
     queryKey: ["project", projectId],
     queryFn: () => getProject(projectId),
   })
@@ -51,6 +58,7 @@ export default function ProjectEditor({
     },
   })
 
+  // TODO: refactor
   useEffect(() => {
     if (projectQuery.data?.success) {
       setData(projectQuery.data.data)
@@ -111,7 +119,7 @@ export default function ProjectEditor({
                   }
                 >
                   <LucideSave className="h-6 w-6" />
-                  {!isEqual(lastData, data) && (
+                  {!isEqual(lastData, data) && !isMobile && (
                     <span className="text-sm text-muted-foreground">
                       Unsaved changes
                     </span>

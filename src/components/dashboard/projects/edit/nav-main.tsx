@@ -28,10 +28,10 @@ export default function SidebarNavMain() {
     resolver: zodResolver(projectUpdateSchema),
     defaultValues: {
       badges: project.data?.badges || [],
-      githubUrl: project.data?.githubUrl || "",
-      shortDescription: project.data?.shortDescription || "",
-      slug: project.data?.slug || "",
-      title: project.data?.title || "",
+      githubUrl: project.data?.githubUrl,
+      shortDescription: project.data?.shortDescription,
+      slug: project.data?.slug,
+      title: project.data?.title,
       visibility: project.data?.visibility || ProjectVisibility.PUBLIC,
     },
   })

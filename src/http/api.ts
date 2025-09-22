@@ -1,38 +1,59 @@
+import type { z } from "zod"
 import type { ProjectType } from "@/utils/db"
+import type { projectInsertSchema } from "@/utils/validations"
 
-export type ApiResponseProjects = {
-  success: boolean
-  data: ProjectType[]
+type SuccessResponse<T> = {
+  success: true
+  data: T
 }
 
-export type ApiResponseProject = {
-  success: boolean
-  data: ProjectType
+export type ErrorResponse = {
+  success: false
+  code: string
+  message: string
 }
 
-export async function getProjects(): Promise<ApiResponseProjects> {
+type ApiResponse<T> = SuccessResponse<T>
+
+type ApiResponseCreateProject = {
+  id: ProjectType["id"]
+}
+
+export type CreateProjectType = ApiResponse<ApiResponseCreateProject>
+export type ListProjectsType = ApiResponse<ProjectType[]>
+export type GetProjectType = ApiResponse<ProjectType>
+
+export async function getProjects() {
   const response = await fetch("/api/projects", {
     method: "GET",
   })
 
-  return response.json()
+  const responseData = await response.json()
+
+  if (!response.ok || !responseData.success) {
+    throw responseData as ErrorResponse
+  }
+
+  return responseData as ListProjectsType
 }
 
-export async function getProject(
-  projectId: string
-): Promise<ApiResponseProject> {
+export async function getProject(projectId: string) {
   const response = await fetch(`/api/projects/${projectId}`, {
     method: "GET",
   })
 
-  return response.json()
+  const responseData = await response.json()
+
+  if (!response.ok || !responseData.success) {
+    throw responseData as ErrorResponse
+  }
+
+  return responseData as GetProjectType
 }
 
 export async function updateProject(projectId: string, project: ProjectType) {
   // biome-ignore lint/correctness/noUnusedVariables: ignore
   const { createdAt, id, ...data } = project
-
-  console.log(data)
 
   await fetch(`/api/projects/${projectId}`, {
     method: "PATCH",
@@ -44,4 +65,21 @@ export async function deleteProject(projectId: string): Promise<void> {
   await fetch(`/api/projects/${projectId}`, {
     method: "DELETE",
   })
+}
+
+export async function createProject(
+  project: z.infer<typeof projectInsertSchema>
+) {
+  const response = await fetch("/api/projects", {
+    method: "POST",
+    body: JSON.stringify(project),
+  })
+
+  const responseData = await response.json()
+
+  if (!response.ok || !responseData.success) {
+    throw responseData as ErrorResponse
+  }
+
+  return responseData as CreateProjectType
 }

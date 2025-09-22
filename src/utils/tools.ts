@@ -69,3 +69,13 @@ export function oklchToRGBA(
 
   return [to255(r), to255(g), to255(b), Math.max(0, Math.min(1, alpha))]
 }
+
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .replace(/-{2,}/g, "-")
+}
