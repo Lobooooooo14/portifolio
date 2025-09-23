@@ -59,14 +59,10 @@ export default function ProjectsDataTable() {
     }
   }, [isFetching])
 
-  // TODO: refactor
   useEffect(() => {
     if (projectsData) {
-      const { data, success } = projectsData
-      if (!success || !data) return
-
       setData(
-        data.sort((a, b) => {
+        projectsData.data.sort((a, b) => {
           if (a.title < b.title) return -1
           if (a.title > b.title) return 1
           return 0

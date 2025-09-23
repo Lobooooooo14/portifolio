@@ -58,11 +58,12 @@ export default function ProjectEditor({
     },
   })
 
-  // TODO: refactor
   useEffect(() => {
-    if (projectQuery.data?.success) {
-      setData(projectQuery.data.data)
-      setLastData(projectQuery.data.data)
+    const data = projectQuery.data?.data
+
+    if (data) {
+      setData(data)
+      setLastData(data)
     }
   }, [projectQuery.data])
 
