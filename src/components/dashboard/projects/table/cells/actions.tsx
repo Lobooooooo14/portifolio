@@ -5,7 +5,6 @@ import type { Row } from "@tanstack/react-table"
 import { LucideCopy, LucideMoreVertical, LucideTrash2 } from "lucide-react"
 import { useContext, useEffect } from "react"
 import { toast } from "sonner"
-import type { ColumnProject } from "@/components/dashboard/projects/columns"
 import { ProjectsDataTableContext } from "@/components/dashboard/projects/table"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,8 +16,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { deleteProject } from "@/http/api"
 import type { ProjectType } from "@/utils/db"
+import type { ColumnType } from "../table-columns"
 
-export default function Actions({ row }: { row: Row<ColumnProject> }) {
+export default function Actions({ row }: { row: Row<ColumnType> }) {
   const table = useContext(ProjectsDataTableContext)
 
   const mutationDelete = useMutation({
