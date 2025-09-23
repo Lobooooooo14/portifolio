@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query"
 import { gsap } from "gsap"
 import { LucideRotateCcw } from "lucide-react"
 import { createContext, useEffect, useRef, useState } from "react"
-import { columns } from "@/components/dashboard/projects/columns"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -15,6 +14,7 @@ import {
   type ListProjectsType,
 } from "@/http/api"
 import type { ProjectType } from "@/utils/db"
+import { tableColumns } from "./table-columns"
 
 gsap.registerPlugin(useGSAP)
 
@@ -23,7 +23,7 @@ export const ProjectsDataTableContext = createContext<{
   refetch: () => Promise<any>
 } | null>(null)
 
-export default function ProjectsDataTable() {
+export default function Table() {
   const [data, setData] = useState<ProjectType[]>([])
   const iconRef = useRef(null)
   const [canRefetch, setCanRefetch] = useState(true)
@@ -113,7 +113,7 @@ export default function ProjectsDataTable() {
 
         <DataTable
           aria-disabled={isFetching}
-          columns={columns}
+          columns={tableColumns}
           data={data.map(project => ({
             id: project.id,
             title: project.title,

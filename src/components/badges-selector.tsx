@@ -4,12 +4,15 @@ import { useEffect, useState } from "react"
 import icons from "simple-icons/icons.json"
 import { type Option, VirtualizedMultiSelect } from "./ui/multi-select"
 
-interface badgeSelectorProps {
+interface badgesSelectorProps {
   value?: string[]
   onChange?: (value: string[]) => void
 }
 
-export default function BadgeSelector({ value, onChange }: badgeSelectorProps) {
+export default function BadgesSelector({
+  value,
+  onChange,
+}: badgesSelectorProps) {
   const [badges, setBadges] = useState<Option[]>([])
 
   useEffect(() => {

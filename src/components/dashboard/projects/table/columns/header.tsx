@@ -2,15 +2,15 @@
 
 import type { Column } from "@tanstack/react-table"
 import { LucideArrowDown, LucideArrowUp } from "lucide-react"
-import type { ColumnProject } from "@/components/dashboard/projects/columns"
 import { Button } from "@/components/ui/button"
+import type { ColumnType } from "../table-columns"
 
 export default function Header({
   children,
   column,
 }: {
   children: React.ReactNode
-  column: Column<ColumnProject, unknown>
+  column: Column<ColumnType, unknown>
 }) {
   return (
     <Button

@@ -1,13 +1,12 @@
 import type { Metadata } from "next"
 import "./globals.css"
 
-import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import Providers from "./providers"
 
 export const metadata: Metadata = {
   title: "Portifolio",
-  description: "Meu portifolio pessoal",
+  description: "My personal portifolio",
 }
 
 export default function RootLayout({
@@ -19,14 +18,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Providers>{children}</Providers>
-        </ThemeProvider>
+        <Providers>{children}</Providers>
         <Toaster />
       </body>
     </html>

@@ -24,7 +24,7 @@ import { authClient } from "@/lib/auth-client"
 
 type Session = typeof auth.$Infer.Session
 
-export function NavUserMenu({ user }: { user: Session["user"] }) {
+export default function UserDropdown({ user }: { user: Session["user"] }) {
   const { setTheme } = useTheme()
 
   async function handleSignOut() {

@@ -1,18 +1,18 @@
 "use client"
 
 import type { ColumnDef } from "@tanstack/react-table"
-import VisibilityBadge from "@/components/visibility"
+import VisibilityBadge from "@/components/visibility-badge"
 import type { ProjectType } from "@/utils/db"
 import Actions from "./cells/actions"
 import Title from "./cells/title"
 import Header from "./columns/header"
 
-export type ColumnProject = Pick<
+export type ColumnType = Pick<
   ProjectType,
   "id" | "title" | "shortDescription" | "visibility" | "slug"
 >
 
-export const columns: ColumnDef<ColumnProject>[] = [
+export const tableColumns: ColumnDef<ColumnType>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => {

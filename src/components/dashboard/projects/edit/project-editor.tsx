@@ -14,7 +14,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { Skeleton } from "@/components/ui/skeleton"
-import VisibilityBadge from "@/components/visibility"
+import VisibilityBadge from "@/components/visibility-badge"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   type ErrorResponse,
@@ -24,7 +24,7 @@ import {
 } from "@/http/api"
 import type { ProjectType } from "@/utils/db"
 import { projectUpdateSchema } from "@/utils/validations"
-import Content from "./editor/content"
+import Editor from "./editor"
 import { EditorSidebar } from "./sidebar"
 
 export interface ProjectDataContextType {
@@ -140,7 +140,7 @@ export default function ProjectEditor({
             </div>
           )}
 
-          {data && <Content project={data} />}
+          {data && <Editor />}
         </SidebarInset>
 
         <EditorSidebar />

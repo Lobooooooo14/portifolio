@@ -2,9 +2,11 @@
 
 import { useContext } from "react"
 import LoadingCircle from "@/components/loading-circle"
-import { Sidebar, SidebarContent, SidebarHeader } from "@/components/ui/sidebar"
-import SidebarNavMain from "./nav-main"
-import { ProjectDataContext } from "./project-editor"
+import { Sidebar } from "@/components/ui/sidebar"
+import { ProjectDataContext } from "../project-editor"
+import Content from "./content"
+import Footer from "./footer"
+import Header from "./header"
 
 export function EditorSidebar({
   ...rest
@@ -15,14 +17,9 @@ export function EditorSidebar({
     <Sidebar side="right" {...rest}>
       {project.data ? (
         <>
-          <SidebarHeader>
-            <h2 className="text-2xl font-semibold text-center">
-              Metadata editor
-            </h2>
-          </SidebarHeader>
-          <SidebarContent>
-            <SidebarNavMain />
-          </SidebarContent>
+          <Header />
+          <Content />
+          <Footer />
         </>
       ) : (
         <div className="flex items-center justify-center h-full">

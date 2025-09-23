@@ -1,6 +1,6 @@
 import { LucidePlus } from "lucide-react"
 import { CreateProjectDialog } from "@/components/dashboard/projects/create-project-dialog"
-import ProjectsDataTable from "@/components/dashboard/projects/projects-data-table"
+import DataTable from "@/components/dashboard/projects/table"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import { Separator } from "@/components/ui/separator"
@@ -23,7 +23,7 @@ export default async function Page() {
 
           <Separator orientation="horizontal" />
 
-          <ProjectsDataTable />
+          <DataTable />
         </div>
       </Dialog>
     </section>

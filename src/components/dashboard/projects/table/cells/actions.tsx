@@ -6,7 +6,7 @@ import { LucideCopy, LucideMoreVertical, LucideTrash2 } from "lucide-react"
 import { useContext, useEffect } from "react"
 import { toast } from "sonner"
 import type { ColumnProject } from "@/components/dashboard/projects/columns"
-import { ProjectsDataTableContext } from "@/components/dashboard/projects/projects-data-table"
+import { ProjectsDataTableContext } from "@/components/dashboard/projects/table"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,

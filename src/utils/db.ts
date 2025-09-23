@@ -1,6 +1,7 @@
 import { eq, inArray } from "drizzle-orm"
 import { BadgesTable, ProjectAccessTable, ProjectsTable } from "@/db/schema"
 import type { dbType } from "@/lib/db"
+import { slugify } from "./tools"
 
 export enum ProjectVisibility {
   PRIVATE = "PRIVATE",
@@ -22,6 +23,8 @@ export type InsertProjectType = Omit<
 
 export async function insertProject(db: dbType, project: InsertProjectType) {
   const { badges, visibility, ...data } = project
+
+  data.slug = slugify(data.slug)
 
   return await db.transaction(async tx => {
     const [_project] = await tx.insert(ProjectsTable).values(data).returning()
